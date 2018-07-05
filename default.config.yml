@@ -1,0 +1,255 @@
+---
+
+# ROLES:
+
+# name: luciditi.dotfiles
+dotfiles_repo: https://github.com/Luciditi/dotfiles
+dotfiles_repo_accept_hostkey: yes
+dotfiles_repo_local_destination: ~/Documents/Luciditi/projects/dotfiles
+# Find dotfiles via $(find . -type f | grep -vE '\.\/\.git\/' | sed -e 's/\.\///g')
+dotfiles_files:
+  - .bash_profile
+  - .bin
+  - .cheat/sed
+  - .direnvrc
+  - .git_template/template/hooks/pre-commit
+  - .git_template/template/hooks/pre-commit.d/.01-pre-commit
+  - .gitignore_global
+  - .inputrc
+  - .macos
+  - .notags
+  - .sh
+  - .macos
+  - .vim/colors/solarized.vim
+  - .vimrc
+  - .vundle.vimrc
+  - .zsh
+  - .zshrc
+
+# TODO: Add private repo e.g. git@example.com:/vendor/repo.git
+prv_repo: https://github.com/Luciditi/dotfiles-example.git
+prv_repo_accept_hostkey: yes
+prv_repo_local_destination: ~/Documents/Luciditi/projects/dotfiles-example
+prv_files:
+  - .devbook
+  - .gitconfig
+  - .ssh/config
+  - .vim/plugin
+
+# name: geerlingguy.homebrew
+homebrew_installed_packages:
+  - antigen
+  - autoconf
+  - atlassian-cli
+  - bash-completion
+  - blackbox
+  - colordiff
+  - composer
+  - ctags 
+  - direnv 
+  - docker
+  - docker-compose
+  - doxygen
+  - easy-rsa
+  - exiftool
+  - fzf
+  - gdrive
+  - gettext
+  - gifsicle
+  - gist
+  - git
+  - go
+  - gpg
+  - httpie
+  - htop
+  - hub
+  - iperf
+  - irssi
+  - jq
+  - kops
+  - kubectl
+  - libevent
+  - lastpass-cli
+  - mackup
+  - clintmod/formulas/macprefs
+  - mas
+  - moreutils
+  - multitail
+  - neovim
+  - nmap
+  - pick
+  - sqlite
+  - mcrypt
+  - nmap
+  - node
+  - nvm
+  - openssl
+  - pv
+  - ssh-copy-id
+  - readline
+  - redis
+  - ripgrep
+  - rbenv
+  - ruby
+  - rust
+  - shellcheck
+  - watch
+  - wget
+  - wrk
+  - terminal-notifier
+  - the_silver_searcher
+  - tig
+  - tree
+  - vim
+  - xpdf
+  - zsh
+
+homebrew_taps:
+  - homebrew/core
+  - homebrew/cask
+  - riboseinc/easy-rsa
+
+homebrew_cask_appdir: /Applications
+homebrew_cask_apps:
+  - appcleaner
+  - android-studio
+  - cyberduck
+  - caffeine
+  - chrome-devtools
+  - docker
+  - dropbox
+  - duet
+  - firefox
+  - flux
+  - google-backup-and-sync
+  - google-chrome
+  - handbrake
+  - iterm2
+  - ishowu-hd
+  - istumbler
+  - java8
+  - keycastr
+  - licecap
+  - linein
+  - livereload
+  #- macvim
+  - mysql-utilities
+  - opera
+  - osxfuse
+  - phpstorm
+  - postico
+  - qbittorrent
+  #- qemu
+  - rescuetime
+  - sequel-pro
+  - skype
+  - spectacle
+  - torbrowser
+  - tunnelblick
+  - slack
+  - vlc
+  - xquartz
+  - wine-stable
+  - wireshark
+  # NOTE: Security Unlock Req.
+  - karabiner
+  - karabiner-elements
+  - paragon-vmdk-mounter
+  # NOTE: PW Req.
+  - chrome-remote-desktop-host
+  - google-earth-pro
+  - vagrant
+  - virtualbox
+
+# name: geerlingguy.mas
+# NOTE: Will prompt for MAS signin
+mas_installed_apps: []
+  #- { id: 497799835, name: "Xcode" }
+  #- { id: 803453959, name: "Slack" }
+  #- { id: 926036361, name: "LastPass Password Manager" }
+mas_email: ""
+mas_password: ""
+
+# name: luciditi.vundle
+vundle_user: "{{ ansible_user_id }}"
+
+# TASKS:
+
+#task: ansible-setup.yml
+downloads: ~/.ansible-downloads/
+
+#task: app-open.yml
+opened_apps:
+  - /Applications/Spectacle.app
+
+# task: extra-packages.yml
+composer_packages:
+ - name: drupal/coder
+ - name: drupal/console-launcher
+   state: present
+   version: "~1.0" 
+ - name: drush/drush
+ - name: kherge/box
+ - name: pdepend/pdepend
+ - name: phpunit/dbunit
+ - name: phpunit/phpunit
+ - name: phploc/phploc
+ - name: phpmd/phpmd
+ - name: phing/phing
+ - name: psy/psysh
+ - name: sebastian/phpcpd
+ - name: sebastian/phpdcd
+ - name: squizlabs/php_codesniffer
+ - name: techlivezheng/phpctags
+go_packages:
+ - name: github.com/StackExchange/dnscontrol
+ - name: github.com/posener/complete/gocomplete
+ - name: github.com/ericchiang/pup
+ - name: github.com/ericchiang/xpup
+ - name: github.com/micahhausler/k8s-oidc-helper
+gem_packages:
+ - name: bropages
+ - name: ghi
+ # NOTE: conflict
+ #- name: trello_cli
+npm_packages:
+ - name: bower
+ - name: browserify
+ - name: eslint
+ - name: github
+ - name: npmdoctor
+ - name: octonode
+ - name: protractor
+ - name: regexgen-cli
+ - name: standard
+ - name: toggl-cli
+ # NOTE: conflict
+ #- name: trello-cli
+ - name: typescript
+pip_packages:
+ - name: awscli
+ - name: boto
+ - name: cheat
+ - name: jinja2-cli
+ - name: jinja2-cli[xml]
+ - name: jinja2-cli[yaml]
+ - name: gcalcli
+ - name: percol
+ - name: pylint
+ - name: pyyaml
+ - name: rackspace-auth-openstack
+ - name: rackspace-novaclient
+ - name: raven
+ - name: swiftly
+ - name: vobject
+ - name: xmltodict
+
+# task: osx.yml
+osx_script: "~/.macos"
+osx_hostname: "DEVBOOK"
+
+# task: terminal.yml
+terminal_theme_default: Pro
+
+# Glob pattern to ansible task files to run after all other tasks are finished.
+post_provision_tasks: []

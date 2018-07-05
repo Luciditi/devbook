@@ -1,0 +1,25 @@
+---
+# Override until: https://github.com/geerlingguy/ansible-role-dotfiles/issues/11
+#- name: geerlingguy.dotfiles
+- src: https://github.com/Luciditi/ansible-role-dotfiles
+  version: issue-11
+  name: luciditi.dotfiles
+
+# Lock Playbook dependencies
+- name: geerlingguy.homebrew
+#- src: https://github.com/Luciditi/ansible-role-homebrew
+#  name: luciditi.homebrew
+
+- name: geerlingguy.mas
+# Lock Playbook dependencies
+#- src: https://github.com/Luciditi/ansible-role-mas
+#  name: luciditi.mas
+
+# Lock Playbook dependencies
+#- src: https://github.com/Luciditi/ansible-osx-command-line-tools
+#  name: luciditi.ansible-osx-command-line-tools
+
+# Override until can pass custom args to task.
+#- name: nass600.vundle
+- src: https://github.com/Luciditi/ansible-role-vundle
+  name: luciditi.vundle

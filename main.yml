@@ -1,0 +1,88 @@
+---
+- hosts: all
+  connection: local
+
+  # VARS
+  vars_files:
+    - default.config.yml
+  pre_tasks:
+    - include_vars: "{{ item }}"
+      with_fileglob:
+        - config.yml
+        - ../config.yml
+      tags: ['always']
+    - name: "Var Dump"
+      debug:
+        var: "{{ var_name }}"
+      tags: ['get-var']
+      when: var_name is defined
+
+
+  # ROLES
+  roles:
+    - { role: luciditi.dotfiles, tags: ['dotfiles'] }
+    - { role: 'roles/luciditi.tags', devbook_tag: 'dotfiles', tags: ['dotfiles'] }
+    - { role: luciditi.dotfiles,
+        dotfiles_repo: "{{ prv_repo }}",
+        dotfiles_repo_accept_hostkey: "{{ prv_repo_accept_hostkey }}",
+        dotfiles_repo_local_destination: "{{ prv_repo_local_destination }}",
+        dotfiles_files: "{{ prv_files }}",
+        tags: ['prv'] }
+    - { role: 'roles/luciditi.tags', devbook_tag: 'prv', tags: ['prv'] }
+    - { role: geerlingguy.homebrew, tags: ['homebrew'] }
+    - { role: 'roles/luciditi.tags', devbook_tag: 'homebrew', tags: ['homebrew'] }
+    - { role: geerlingguy.mas, tags: ['mas']}
+    - { role: 'roles/luciditi.tags', devbook_tag: 'mas', tags: ['mas'] }
+    - { role: luciditi.vundle, tags: ['vundle']}
+    - { role: 'roles/luciditi.tags', devbook_tag: 'vundle', tags: ['vundle'] }
+
+
+  # TASKS
+  tasks:
+    - include: tasks/ansible-setup.yml
+      tags: ['ansible-setup']
+    - name: Marking Devbook Progress
+      shell: echo 'ansible-setup' >> .devbook.tags
+      tags: ['ansible-setup']
+
+    - include: tasks/app-open.yml
+      tags: ['app-open']
+    - name: Marking Devbook Progress
+      shell: echo 'app-open' >> .devbook.tags
+      tags: ['app-open']
+
+    - include: tasks/extra-packages.yml
+      tags: ['extra-packages']
+    - name: Marking Devbook Progress
+      shell: echo 'extra-packages' >> .devbook.tags
+      tags: ['extra-packages']
+
+    - include: tasks/osx.yml
+      tags: ['osx']
+    - name: Marking Devbook Progress
+      shell: echo 'osx' >> .devbook.tags
+      tags: ['osx']
+
+    - include: tasks/sudoers.yml
+      tags: ['sudoers']
+    - name: Marking Devbook Progress
+      shell: echo 'sudoers' >> .devbook.tags
+      tags: ['sudoers']
+
+    - include: tasks/terminal.yml
+      tags: ['terminal']
+    - name: Marking Devbook Progress
+      shell: echo 'terminal' >> .devbook.tags
+      tags: ['terminal']
+
+    - include: tasks/zsh.yml
+      tags: ['zsh']
+    - name: Marking Devbook Progress
+      shell: echo 'zsh' >> .devbook.tags
+      tags: ['zsh']
+
+    - name: Run configured post-provision ansible task files.
+      include: "{{ outer_item }}"
+      loop_control:
+        loop_var: outer_item
+      with_fileglob: "{{ post_provision_tasks|default(omit) }}"

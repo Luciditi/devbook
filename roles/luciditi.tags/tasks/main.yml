@@ -1,0 +1,4 @@
+---
+
+- name: Marking Devbook Progress
+  shell: echo "{{ devbook_tag }}" >> .devbook.tags

@@ -1,0 +1,9 @@
+---
+- name: Accept XCode license agreement
+  shell: xcodebuild -license accept
+  become: yes
+  ignore_errors: yes
+
+- name: Open macOS applications
+  shell: open -a "{{ item }}"
+  with_items: "{{ opened_apps }}"
