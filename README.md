@@ -15,45 +15,18 @@ A developer workstation provisioner for macOS powered by Ansible.
   - <sub>(or clone the repo & run `./bootstrap.sh` & `./init.sh` if you don't trush me)</sub>
 
 ## Toolchain
-Devbook contains the following tools (not exhaustive, see [`default.config.yml`](default.config.yml) for the full manifest):
+Devbook contains the following features (not exhaustive, see [`default.config.yml`](default.config.yml) for the full manifest):
 
 - Version-controlled dotfiles (e.g. defaulted to [`Luciditi/dotfiles`](https://github.com/Luciditi/dotfiles))
 - Version-controlled private dotfiles (e.g. sensitive info like SSH hosts, e.g. [`Luciditi/dotfiles-example`](https://github.com/Luciditi/dotfiles-example))
 - Custom [SH](https://github.com/Luciditi/dotfiles/tree/master/.sh)/[ZSH](https://github.com/Luciditi/dotfiles/tree/master/.zsh) functions, [scripts](https://github.com/Luciditi/dotfiles/tree/master/.bin), completions, & aliases.
 - Git [hook templates](https://github.com/Luciditi/dotfiles/tree/master/.git_template/template/hooks)
 - macOS [configuration](https://github.com/Luciditi/dotfiles/blob/master/.macos)
-- Various packages for Go, PHP, Ruby, Node, & Python.
 - [Vim](https://github.com/vim/vim)/[Vundle](https://github.com/VundleVim/Vundle.vim) [Setup](https://github.com/Luciditi/dotfiles/blob/master/.vimrc)
-- **CLI Tools:**
-  - [Composer](https://github.com/composer/composer)
-  - [Docker/Docker-Composer](https://www.docker.com/)
-  - [Gist](https://github.com/defunkt/gist)
-  - [Hub](https://github.com/github/hub)
-  - [Go](https://golang.org/)
-  - [HTTPie](https://github.com/jakubroztocil/httpie)
-  - [Homebrew](https://brew.sh/)
-  - [JQ](https://stedolan.github.io/jq/)
-  - [NodeJS](https://nodejs.org/)
-  - [Ruby](https://www.ruby-lang.org/en/)
-  - [Rust](https://www.rust-lang.org/)
-- **macOS Applications:**
-  - [Android Studio](https://developer.android.com/studio/index.html)
-  - [Docker](https://www.docker.com/)
-  - [Dropbox](https://www.dropbox.com/)
-  - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
-  - [Google Backup & Sync](https://www.google.com/drive/download/backup-and-sync/)
-  - [Google Chrome](https://www.google.com/chrome/)
-  - [iTerm2](https://github.com/gnachman/iTerm2)
-  - [Sequel Pro](https://www.sequelpro.com/)
-  - [TunnelBlick](https://tunnelblick.net/)
-  - [Wireshark](https://www.wireshark.org/)
-  - [Vagrant](https://www.vagrantup.com/)
-  - [VirtualBox](https://www.virtualbox.org/)
-- **Shell:**
-  - [ZSH](http://www.zsh.org/)
-  - [Antigen](https://github.com/zsh-users/antigen)
-  - [OMZ](https://github.com/robbyrussell/oh-my-zsh/)
-  - [PL9K](https://github.com/bhilburn/powerlevel9k)
+- Various CLI tools via [Homebrew](https://github.com/Homebrew/brew).
+- Various macOS applications via [Homebrew cask](https://github.com/Homebrew/homebrew-cask) & [Mas](https://github.com/mas-cli/mas) (App Store)
+- Various packages for Go, PHP, Ruby, Node, & Python via their respective dependency managers.
+- Customized [ZSH](http://www.zsh.org/) environment via [Antigen](https://github.com/zsh-users/antigen), [OMZ](https://github.com/robbyrussell/oh-my-zsh/), [PL9K](https://github.com/bhilburn/powerlevel9k)
 
 ## Configuration
 There are 3 config areas: [override](#override), [devbook extension](#devbook-extension), & [task/role](#taskrole).
