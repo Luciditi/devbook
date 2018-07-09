@@ -1,0 +1,6 @@
+---
+- name: Remove unlimited sudo timeout config
+  file:
+    path: /etc/sudoers.d/ssh_session_timeout
+    state: absent
+  become: yes

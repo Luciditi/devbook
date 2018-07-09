@@ -1,0 +1,12 @@
+---
+- name: Set unlimited sudo timeout
+  lineinfile:
+    dest: /etc/sudoers.d/ssh_session_timeout
+    line: 'Defaults  env_reset,timestamp_timeout=-1'
+    create: yes
+    owner: root 
+    group: wheel 
+    mode: 0440
+    state: present
+    validate: 'visudo -c -f %s'
+  become: yes
