@@ -107,6 +107,7 @@ homebrew_installed_packages:
 homebrew_taps:
   - homebrew/core
   - homebrew/cask
+  - homebrew/cask-versions
   - riboseinc/easy-rsa
 
 homebrew_cask_appdir: /Applications
