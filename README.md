@@ -67,7 +67,7 @@ I've found macOS provisioning prone to all kinds of problems (various types of a
 
 Luckily, Ansible is a great tool here. it's designed to be idempotent; you can run it over-and-over again without breaking things. 
 
-As Devbook runs through its playbook, it will tag its progress (in `.devbook.tags`). Running `./init.sh` after failure will skip completed tags and resume where it left off. If you provision a large tool chain expect: pauses for `sudo` access, failures in package downloads, and other unforseen problems. 
+As Devbook runs through its playbook, it will tag its progress (in `.devbook.tags`). Running `./init.sh` after failure will skip completed tags and resume where it left off. If you provision a large tool chain expect: failures in package downloads and other unforseen problems. 
 
 If you hit any other issues, post it [over here](https://github.com/luciditi//devbook/issues).
 
@@ -76,4 +76,4 @@ A shout out to geerlingguy & mathiasbynens which I based my work on. I pulled mu
 
 If you like to do testing, this [repo](https://github.com/geerlingguy/macos-virtualbox-vm) is good for bootstrapping your own VirtualBox macOS image so you don't trash your current configuration.
 
-There are other features I'd like to put in place down the road (e.g. auto-restart, longer sudo-timeouts, [Mackup integration](https://github.com/lra/mackup)) reference the [issue page](https://github.com/luciditi//devbook/issues) if you'd like to see something else.
+There are other features I'd like to put in place down the road (e.g. auto-restart, [Mackup integration](https://github.com/lra/mackup)) reference the [issue page](https://github.com/luciditi//devbook/issues) if you'd like to see something else.
