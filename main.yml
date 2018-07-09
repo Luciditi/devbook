@@ -16,7 +16,11 @@
         var: "{{ var_name }}"
       tags: ['get-var']
       when: var_name is defined
-
+    - name: Run configured pre-provision ansible task files.
+      include: "{{ outer_item }}"
+      loop_control:
+        loop_var: outer_item
+      with_fileglob: "{{ pre_provision_tasks|default(omit) }}"
 
   # ROLES
   roles:

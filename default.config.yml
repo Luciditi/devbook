@@ -251,6 +251,9 @@ osx_hostname: "DEVBOOK"
 # task: terminal.yml
 terminal_theme_default: Pro
 
+
+# Glob pattern to ansible task files to run before all other tasks are finished.
+pre_provision_tasks: pre_tasks/*.yml
+
 # Glob pattern to ansible task files to run after all other tasks are finished.
-post_provision_tasks: 
-  - post_tasks/sudo_timeout.yml
+post_provision_tasks: post_tasks/*.yml
