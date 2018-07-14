@@ -2,7 +2,6 @@
 
 # Set stop on error / enable debug
 set -euo pipefail
-#set -vx
 
 ############################################################################
 # INSTALL DEVBOOK
@@ -70,6 +69,17 @@ devbook_tags() {
     cat "$DEVBOOK_TAG_FILE" "$DEVBOOK_SKIP_FILE" > "$MERGE"
     sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/,/g' "$MERGE"
     rm "$MERGE"
+  fi
+}
+
+# Get verbosity
+devbook_verbosity() {
+  DEVBOOK_VERBOSE="${DEVBOOK_VERBOSE:-}"
+  if [[ "$DEVBOOK_VERBOSE" == "1" ]]; then
+    set -vx
+    echo "-vvv"
+  else
+    echo ""
   fi
 }
 
@@ -165,6 +175,7 @@ cat << "EOF"
 |                                                                                                     |
 =======================================================================================================
 EOF
+VERBOSE_OPT=$(devbook_verbosity)
 
 
 # Use specified config
@@ -188,7 +199,7 @@ fi
 # Add Ansible requirements...
 echo ""
 echo "${C_HIL}Installing Requirements...${C_RES}"
-ansible-galaxy install -r requirements.yml
+ansible-galaxy install $VERBOSE_OPT -r requirements.yml
 
 
 # Note on private repo access
@@ -204,8 +215,8 @@ fi
 # Start Ansible playbook
 echo ""
 echo "${C_HIL}Installing DevBook...${C_RES}"
-TAGS=$(devbook_tags)
-ansible-playbook main.yml -i inventory $ANSIBLE_SUDO --skip-tags "$TAGS"
+SKIP_TAGS=$(devbook_tags)
+ansible-playbook main.yml $VERBOSE_OPT -i inventory $ANSIBLE_SUDO --skip-tags "$SKIP_TAGS"
 
 
 # Execute any other .devbook configs found
