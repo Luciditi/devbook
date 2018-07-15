@@ -2,6 +2,10 @@
 
 # Set stop on error / enable debug
 set -euo pipefail
+DEVBOOK_VERBOSE="${DEVBOOK_VERBOSE:-}"
+if [[ "$DEVBOOK_VERBOSE" == "1" ]]; then
+  set -o verbose
+fi
 
 ############################################################################
 # INSTALL DEVBOOK
@@ -58,8 +62,18 @@ ansible_var() {
   fi
 }
 
+# Retrieve optional --tags param
+devbook_do_tags() {
+  if [[ -f "$DEVBOOK_LIST_FILE" ]]; then
+    TAGS=$(paste -sd "," - < "$DEVBOOK_LIST_FILE")
+    echo "--tags $TAGS"
+  else
+    echo ""
+  fi
+}
+
 # Retrieve the list of skipped and/or finished tags.
-devbook_tags() {
+devbook_skip_tags() {
   if [[ -f "$DEVBOOK_TAG_FILE" && ! -f "$DEVBOOK_SKIP_FILE" ]]; then
     sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/,/g' "$DEVBOOK_TAG_FILE"
   elif [[ ! -f "$DEVBOOK_TAG_FILE" && -f "$DEVBOOK_SKIP_FILE" ]]; then
@@ -74,9 +88,7 @@ devbook_tags() {
 
 # Get verbosity
 devbook_verbosity() {
-  DEVBOOK_VERBOSE="${DEVBOOK_VERBOSE:-}"
   if [[ "$DEVBOOK_VERBOSE" == "1" ]]; then
-    set -vx
     echo "-vvv"
   else
     echo ""
@@ -98,8 +110,9 @@ export ANSIBLE_DEPRECATION_WARNINGS=0
 ANSIBLE_SUDO="-K"
 DEVBOOK_BRANCH="mk1"
 DEVBOOK_EXT_OPTS=""
-DEVBOOK_VERSION="1.0.3"
+DEVBOOK_VERSION="1.0.4"
 DEVBOOK_NOTES="NOTES.md"
+DEVBOOK_LIST_FILE=".devbook.list"
 DEVBOOK_TAG_FILE=".devbook.tags"
 DEVBOOK_SKIP_FILE=".devbook.skip"
 INIT="init.sh"
@@ -215,9 +228,9 @@ fi
 # Start Ansible playbook
 echo ""
 echo "${C_HIL}Installing DevBook...${C_RES}"
-SKIP_TAGS=$(devbook_tags)
-ansible-playbook main.yml $VERBOSE_OPT -i inventory $ANSIBLE_SUDO --skip-tags "$SKIP_TAGS"
-
+SKIP_TAGS=$(devbook_skip_tags)
+LIST_TAGS=$(devbook_do_tags)
+ansible-playbook main.yml $VERBOSE_OPT -i inventory $ANSIBLE_SUDO --skip-tags "$SKIP_TAGS" $LIST_TAGS
 
 # Execute any other .devbook configs found
 if [[ -d "$HOME/.devbook" ]]; then
