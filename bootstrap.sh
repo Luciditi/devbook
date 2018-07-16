@@ -52,9 +52,13 @@ C_SUC="\033[32m"
 C_ERR="\033[31m"
 C_RES="\033[0m"
 
-BOOT_CODE="sh <(curl -sL https://jig.io/devbook-init)"
+BOOT_CODE="sh <(curl -sL jig.io/devbook-init)"
 INIT="init.sh"
+if [ -f "$INIT" ]; then
+  BOOT_CODE="./$INIT"
+fi
 SCRIPTS_DIRECTORY="$(dirname $0)"
+CONFIG_URL=${1-}
 PIP_BIN="/usr/local/bin/pip"
 
 ##}}}#######################################################################
@@ -101,13 +105,40 @@ bash -c "sudo $PIP_BIN install ansible==2.4.4.0"
 echo "${C_SUC}Ansible installed! Execute one of the following commmands: ${C_RES}"
 echo ""
 
-if [ -f "$INIT" ]; then
-  BOOT_CODE="./$INIT"
+echo "${C_SUC}1. Full Install                    :   ${C_WAR}$BOOT_CODE${C_RES}"
+echo "${C_SUC}2. Full Install (w/ key install)   :   ${C_WAR}$BOOT_CODE -k ${C_RES}"
+echo "${C_SUC}3. Partial Install                 :   ${C_WAR}$BOOT_CODE jig.io/devbook-config-mini${C_RES}"
+echo "${C_SUC}4. Partial Install (w/ key install):   ${C_WAR}$BOOT_CODE -k jig.io/devbook-config-mini${C_RES}"
+if [[ ! -z "$CONFIG_URL" ]]; then
+  echo "${C_SUC}5. Custom Install                  :   ${C_WAR}$BOOT_CODE $CONFIG_URL${C_RES}"
+  echo "${C_SUC}6. Custom Install (w/ key install) :   ${C_WAR}$BOOT_CODE -k $CONFIG_URL${C_RES}"
 fi
-echo "${C_SUC}1. Full Install: ${C_WAR}$BOOT_CODE${C_RES}"
-echo "${C_SUC}2. Partial Install: ${C_WAR}$BOOT_CODE https://jig.io/devbook-config-mini${C_RES}"
 echo ""
-echo "${C_SUC} Add ${C_WAR}-k${C_RES}${C_SUC} option for an SSH key install. (e.g. ${C_WAR}$BOOT_CODE -k https://jig.io/devbook-config-mini${C_RES}${C_SUC})${C_RES}"
+
+read -t 10 -p "Select Option:" OPTION
 echo ""
+
+RUN_CODE=""
+case $OPTION in
+  1) RUN_CODE="$BOOT_CODE" ;;
+  2) RUN_CODE="$BOOT_CODE -k" ;;
+  3) RUN_CODE="$BOOT_CODE jig.io/devbook-config-mini" ;;
+  4) RUN_CODE="$BOOT_CODE -k jig.io/devbook-config-mini" ;;
+  5)
+    if [[ ! -z "$CONFIG_URL" ]]; then
+      RUN_CODE="$BOOT_CODE $CONFIG_URL"
+    fi
+    ;;
+  6)
+    if [[ ! -z "$CONFIG_URL" ]]; then
+      RUN_CODE="$BOOT_CODE -k $CONFIG_URL"
+    fi
+    ;;
+esac
+
+if [[ ! -z "$RUN_CODE" ]]; then
+  echo "Executing: ${C_WAR}$RUN_CODE${C_RES}"
+  eval "$RUN_CODE"
+fi
 
 exit 0
