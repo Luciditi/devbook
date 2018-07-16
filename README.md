@@ -9,8 +9,8 @@ A developer workstation provisioner for macOS powered by Ansible.
 
 - **Dependencies:** `sh <(curl -sL jig.io/devbook-boot)` for XCode CLI tools & Ansible 
 - **Installer:**
-  - **Full (~2 hours):** `sh <(curl -sL jig.io/devbook-init)`
-  - **Partial (~1 hour):** `sh <(curl -sL jig.io/devbook-init) jig.io/devbook-config-mini`
+  - **Full (~1 hour):** `sh <(curl -sL jig.io/devbook-init)`
+  - **Partial (~0.5 hour):** `sh <(curl -sL jig.io/devbook-init) jig.io/devbook-config-mini`
     - <sub>Add `-k` option for a SSH key install (e.g. `sh <(curl -sL jig.io/devbook-init) -k jig.io/devbook-config-mini`)</sub>
   - <sub>(or clone the repo & run `./bootstrap.sh` & `./init.sh` if you don't trush me)</sub>
 
@@ -75,5 +75,3 @@ If you hit any other issues, post it [over here](https://github.com/luciditi//de
 A shout out to geerlingguy & mathiasbynens which I based my work on. I pulled much cool stuff from these repos: [`geerlingguy/mac-dev-playbook`](https://github.com/geerlingguy/mac-dev-playbook) & [`mathiasbynens/dotfiles`](https://github.com/mathiasbynens/dotfiles)
 
 If you like to do testing, this [repo](https://github.com/geerlingguy/macos-virtualbox-vm) is good for bootstrapping your own VirtualBox macOS image so you don't trash your current configuration.
-
-There are other features I'd like to put in place down the road (e.g. auto-restart, [Mackup integration](https://github.com/lra/mackup)) reference the [issue page](https://github.com/luciditi//devbook/issues) if you'd like to see something else.
