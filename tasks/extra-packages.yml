@@ -31,8 +31,7 @@
     version: "{{ item.version | default(omit) }}"
     executable: "{{ item.executable | default(omit) }}"
     # ignore for macOS SIP: https://github.com/pypa/pip/issues/3165#issuecomment-145856429
-    # to -- user to get around macOS Python issues
-    extra_args: --user --ignore-installed six
+    extra_args: --ignore-installed six
   with_items: "{{ pip_packages }}"
   become: true
 
