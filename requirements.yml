@@ -7,10 +7,12 @@
 
 # Lock Playbook dependencies
 - name: geerlingguy.homebrew
+  version: 2.4.5
 #- src: https://github.com/Luciditi/ansible-role-homebrew
 #  name: luciditi.homebrew
 
 - name: geerlingguy.mas
+  version: 1.2.0
 # Lock Playbook dependencies
 #- src: https://github.com/Luciditi/ansible-role-mas
 #  name: luciditi.mas
