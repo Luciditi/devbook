@@ -108,6 +108,7 @@ C_RES="\033[0m"
 # SUPRESS ANSIBLE_DEPRECATION
 export ANSIBLE_DEPRECATION_WARNINGS=0
 ANSIBLE_SUDO="-K"
+CONFIG=${1:-config.yml}
 DEVBOOK_BRANCH=${DEVBOOK_BRANCH:=mk2}
 DEVBOOK_EXT_OPTS=""
 DEVBOOK_VERSION=${DEVBOOK_VERSION:=2.0.0}
@@ -118,6 +119,7 @@ DEVBOOK_SKIP_FILE=".devbook.skip"
 INIT="init.sh"
 KEY_CONFIRM="1"
 KEY_FILE="$HOME/.ssh/id_rsa"
+KEY_FILE_COMMENT="$USER@devbook-$DEVBOOK_VERSION-$CONFIG"
 KEY_FILE_FLAG=0
 REPO="https://github.com/Luciditi/devbook.git"
 SCRIPTS_DIRECTORY="$(dirname $0)"
@@ -192,7 +194,6 @@ VERBOSE_OPT=$(devbook_verbosity)
 
 
 # Use specified config
-CONFIG=${1:-config.yml}
 if [[ "$CONFIG" != "config.yml" ]]; then
   echo ""
   echo "${C_HIL}Using ${C_WAR}$CONFIG${C_RES}${C_HIL} for ${C_WAR}config.yml${C_RES}${C_HIL}...${C_RES}"
@@ -204,7 +205,7 @@ fi
 if [[ "$KEY_FILE_FLAG" == "1" && ! -f "$KEY_FILE" ]]; then
   echo ""
   echo "${C_HIL}Creating ${C_WAR}$KEY_FILE${C_RES}${C_HIL}...${C_RES}"
-  ssh-keygen -f "$KEY_FILE" -t rsa -N ''
+  ssh-keygen -f "$KEY_FILE" -t rsa -N '' -C "$KEY_FILE_COMMENT"
   cat "$KEY_FILE.pub" >> "$HOME/.ssh/authorized_keys"
 fi
 
