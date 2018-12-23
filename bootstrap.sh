@@ -92,13 +92,13 @@ CLI_TEST=$(bash -c "xcode-select -p 2>/dev/null;echo ''")
 if [ -z "$CLI_TEST" ]; then
   echo "${C_SUC}  - Launching XCode CLI DevTools installer press ${C_WAR}ENTER${C_RES}${C_SUC} when finished... ${C_RES}"
   xcode-select --install
-  read INPUT
+  read -r
 fi
 
 # Run Ansible Install
 echo "${C_SUC}  - Installing pip & Ansible. Please enter ${C_WAR}$USER${C_RES}${C_SUC}'s password to install... ${C_RES}"
 sudo easy_install pip
-bash -c "sudo $PIP_BIN install ansible==2.4.4.0"
+bash -c "sudo $PIP_BIN install ansible==2.7.5"
 
 
 # Instructions
