@@ -43,3 +43,4 @@
     user_install: no
     executable: "{{ item.executable | default(omit) }}"
   with_items: "{{ gem_packages }}"
+  become: true
