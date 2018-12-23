@@ -53,7 +53,7 @@ C_ERR="\033[31m"
 C_RES="\033[0m"
 
 ANSIBLE_VERSION="2.7.5"
-BOOT_CODE="sh <(curl -sL jig.io/devbook-init)"
+BOOT_CODE="sh <(curl -sL jig.io/dev-init)"
 INIT="init.sh"
 if [ -f "$INIT" ]; then
   BOOT_CODE="./$INIT"

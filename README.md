@@ -7,11 +7,11 @@ A developer workstation provisioner for macOS powered by Ansible.
 
 ## Installation
 
-- **Dependencies:** `sh <(curl -sL jig.io/devbook-boot)` for XCode CLI tools & Ansible 
+- **Dependencies:** `sh <(curl -sL jig.io/dev-boot)` for XCode CLI tools & Ansible 
 - **Installer:**
-  - **Full (~1 hour):** `sh <(curl -sL jig.io/devbook-init)`
-  - **Partial (~0.5 hour):** `sh <(curl -sL jig.io/devbook-init) jig.io/devbook-config-mini`
-    - <sub>Add `-k` option for a SSH key install (e.g. `sh <(curl -sL jig.io/devbook-init) -k jig.io/devbook-config-mini`)</sub>
+  - **Full (~1 hour):** `sh <(curl -sL jig.io/dev-init)`
+  - **Partial (~0.5 hour):** `sh <(curl -sL jig.io/dev-init) jig.io/devbook-config-mini`
+    - <sub>Add `-k` option for a SSH key install (e.g. `sh <(curl -sL jig.io/dev-init) -k jig.io/devbook-config-mini`)</sub>
   - <sub>(or clone the repo & run `./bootstrap.sh` & `./init.sh` if you don't trush me)</sub>
 
 ## Toolchain
@@ -51,7 +51,7 @@ If you're familar with Ansible & Shell scripting, you can provide your own custo
 
 To get started make sure `prv_repo` (or `dotfiles_repo`) has a mounted `.devbook` dir and subdirs with `init.sh`. 
 - **EXAMPLE:** [`Luciditi/dotfiles-example`](https://github.com/Luciditi/dotfiles-example).
-- **Template Creator:** You can also run `./dir.sh $MY_DIR` (or `sh <(curl -sL jig.io/devbook-dir) $MY_DIR`) to grab the [`Luciditi/devbook-config` starter template](https://github.com/Luciditi/devbook-config) and drop it into `.devbook/$MY_DIR`.
+- **Template Creator:** You can also run `./dir.sh $MY_DIR` (or `sh <(curl -sL jig.io/dev-dir) $MY_DIR`) to grab the [`Luciditi/devbook-config` starter template](https://github.com/Luciditi/devbook-config) and drop it into `.devbook/$MY_DIR`.
 
 #### Custom Notes
 If you have any post-provision steps that might require manual steps (e.g. enabling FileVault, manual app install, etc.) you can drop them into `NOTES.md`. After Devbook completes, it will print the contents out to the console after installation.
