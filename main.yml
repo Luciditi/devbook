@@ -73,12 +73,6 @@
       shell: echo 'sudoers' >> .devbook.tags
       tags: ['sudoers']
 
-    - include: tasks/terminal.yml
-      tags: ['terminal']
-    - name: Marking Devbook Progress
-      shell: echo 'terminal' >> .devbook.tags
-      tags: ['terminal']
-
     - include: tasks/zsh.yml
       tags: ['zsh']
     - name: Marking Devbook Progress

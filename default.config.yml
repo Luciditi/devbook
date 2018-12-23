@@ -249,9 +249,6 @@ pip_packages:
 osx_script: "~/.macos"
 osx_hostname: "DEVBOOK"
 
-# task: terminal.yml
-terminal_theme_default: Pro
-
 
 # Glob pattern to ansible task files to run before all other tasks are finished.
 pre_provision_tasks: pre_tasks/*.yml
