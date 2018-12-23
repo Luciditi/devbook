@@ -52,6 +52,7 @@ C_SUC="\033[32m"
 C_ERR="\033[31m"
 C_RES="\033[0m"
 
+ANSIBLE_VERSION="2.7.5"
 BOOT_CODE="sh <(curl -sL jig.io/devbook-init)"
 INIT="init.sh"
 if [ -f "$INIT" ]; then
@@ -85,7 +86,7 @@ while getopts 'h' FLAG; do
   esac
 done
 
-echo "${C_HIL}Bootstrapping Ansible... ${C_RES}"
+echo "${C_HIL}Bootstrapping Ansible $ANSIBLE_VERSION... ${C_RES}"
 
 # Run Xcode CLI Install
 CLI_TEST=$(bash -c "xcode-select -p 2>/dev/null;echo ''")
@@ -96,9 +97,9 @@ if [ -z "$CLI_TEST" ]; then
 fi
 
 # Run Ansible Install
-echo "${C_SUC}  - Installing pip & Ansible. Please enter ${C_WAR}$USER${C_RES}${C_SUC}'s password to install... ${C_RES}"
+echo "${C_SUC}  - Installing pip & Ansible $ANSIBLE_VERSION. Please enter ${C_WAR}$USER${C_RES}${C_SUC}'s password to install... ${C_RES}"
 sudo easy_install pip
-bash -c "sudo $PIP_BIN install ansible==2.7.5"
+bash -c "sudo $PIP_BIN install ansible==$ANSIBLE_VERSION"
 
 
 # Instructions
