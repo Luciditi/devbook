@@ -17,10 +17,13 @@ before_install:
   - sudo rm -rf /usr/local/Caskroom
   - sudo rm -rf /usr/local/bin/brew
 
+  # Add dummy pubkey
+  - touch "$HOME/.ssh/id_rsa.pub"
+
 install:
 
   # Install Ansible.
-  - sudo pip install ansible==2.4.4.0
+  - sudo pip install ansible==2.7.5
   
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
@@ -42,4 +45,4 @@ script:
   - curl -o ".devbook.skip"  "$DEVBOOK_SKIP_URL"
 
   # Run the installer
-  - ./init.sh -f "$DEVBOOK_CONFIG_URL"
+  - ./init.sh "$DEVBOOK_CONFIG_URL"
