@@ -133,8 +133,8 @@ C_RES="\033[0m"
 
 # SUPRESS ANSIBLE_DEPRECATION
 export ANSIBLE_DEPRECATION_WARNINGS=0
-ANSIBLE_SUDO=${ANSIBLE_SUDO:=-K}
 CONFIG=${1:=config.yml}
+DEVBOOK_ANSIBLE_SUDO=${DEVBOOK_ANSIBLE_SUDO:=-K}
 DEVBOOK_BRANCH=${DEVBOOK_BRANCH:=mk2}
 DEVBOOK_EXT_OPTS=${DEVBOOK_EXT_OPTS:=}
 DEVBOOK_KEY_CONFIRM=${DEVBOOK_KEY_CONFIRM:=1}
@@ -225,7 +225,7 @@ echo ""
 echo "${C_HIL}Installing DevBook...${C_RES}"
 SKIP_TAGS=$(devbook_skip_tags)
 LIST_TAGS=$(devbook_do_tags)
-ansible-playbook main.yml $VERBOSE_OPT -i inventory $ANSIBLE_SUDO --skip-tags "$SKIP_TAGS" $LIST_TAGS
+ansible-playbook main.yml $VERBOSE_OPT -i inventory $DEVBOOK_ANSIBLE_SUDO --skip-tags "$SKIP_TAGS" $LIST_TAGS
 
 # Execute any other .devbook configs found
 if [[ -d "$HOME/.devbook" ]]; then
