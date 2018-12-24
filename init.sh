@@ -137,13 +137,13 @@ ANSIBLE_SUDO=${ANSIBLE_SUDO:=-K}
 CONFIG=${1:=config.yml}
 DEVBOOK_BRANCH=${DEVBOOK_BRANCH:=mk2}
 DEVBOOK_EXT_OPTS=${DEVBOOK_EXT_OPTS:=}
+DEVBOOK_KEY_CONFIRM=${DEVBOOK_KEY_CONFIRM:=1}
 DEVBOOK_VERSION=${DEVBOOK_VERSION:=2.0.0}
 DEVBOOK_NOTES="NOTES.md"
 DEVBOOK_LIST_FILE=".devbook.list"
 DEVBOOK_TAG_FILE=".devbook.tags"
 DEVBOOK_SKIP_FILE=".devbook.skip"
 INIT="init.sh"
-KEY_CONFIRM="1"
 KEY_FILE="$HOME/.ssh/id_rsa"
 KEY_FILE_COMMENT="$USER@devbook-$DEVBOOK_VERSION-$CONFIG"
 KEY_FILE_FLAG=0
@@ -212,7 +212,7 @@ ansible-galaxy install $VERBOSE_OPT -r requirements.yml
 
 # Note on private repo access
 REPO=$(ansible_var prv_repo)
-if [[ "$KEY_CONFIRM" == "1" && "$REPO" != "" ]]; then
+if [[ "$DEVBOOK_KEY_CONFIRM" == "1" && "$REPO" != "" ]]; then
   echo ""
   echo "${C_SUC}Ensure ${C_WAR}$KEY_FILE.pub${C_RES}${C_SUC} is an allowed key for ${C_WAR}$REPO${C_SUC} then press ${C_WAR}ENTER${C_SUC}.${C_RES}"
   cat "$KEY_FILE.pub"
