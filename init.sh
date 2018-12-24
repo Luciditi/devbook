@@ -113,15 +113,9 @@ expr "$*" : ".*--help" > /dev/null && usage
 
 # Handle options
 # Add options x: - required arg
-while getopts 'fhk' FLAG; do
+while getopts 'hk' FLAG; do
   case "${FLAG}" in
     h) usage; exit 1 ;;
-    f)
-      ANSIBLE_SUDO=""
-      DEVBOOK_EXT_OPTS="-f"
-      KEY_CONFIRM=0
-      shift $((OPTIND -1))
-      ;;
     k) KEY_FILE_FLAG=1; shift $((OPTIND -1)); ;;
     *) : ;;
   esac
@@ -140,7 +134,7 @@ C_RES="\033[0m"
 # SUPRESS ANSIBLE_DEPRECATION
 export ANSIBLE_DEPRECATION_WARNINGS=0
 ANSIBLE_SUDO=${ANSIBLE_SUDO:=-K}
-CONFIG=${1:-config.yml}
+CONFIG=${1:=config.yml}
 DEVBOOK_BRANCH=${DEVBOOK_BRANCH:=mk2}
 DEVBOOK_EXT_OPTS=${DEVBOOK_EXT_OPTS:=}
 DEVBOOK_VERSION=${DEVBOOK_VERSION:=2.0.0}
