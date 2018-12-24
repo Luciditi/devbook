@@ -95,35 +95,6 @@ devbook_verbosity() {
   fi
 }
 
-############################################################################
-# VARS
-############################################################################
-# Output colors.
-C_HIL="\033[36m"
-C_WAR="\033[33m"
-C_SUC="\033[32m"
-C_ERR="\033[31m"
-C_RES="\033[0m"
-
-# SUPRESS ANSIBLE_DEPRECATION
-export ANSIBLE_DEPRECATION_WARNINGS=0
-ANSIBLE_SUDO="-K"
-CONFIG=${1:-config.yml}
-DEVBOOK_BRANCH=${DEVBOOK_BRANCH:=mk2}
-DEVBOOK_EXT_OPTS=""
-DEVBOOK_VERSION=${DEVBOOK_VERSION:=2.0.0}
-DEVBOOK_NOTES="NOTES.md"
-DEVBOOK_LIST_FILE=".devbook.list"
-DEVBOOK_TAG_FILE=".devbook.tags"
-DEVBOOK_SKIP_FILE=".devbook.skip"
-INIT="init.sh"
-KEY_CONFIRM="1"
-KEY_FILE="$HOME/.ssh/id_rsa"
-KEY_FILE_COMMENT="$USER@devbook-$DEVBOOK_VERSION-$CONFIG"
-KEY_FILE_FLAG=0
-REPO="https://github.com/Luciditi/devbook.git"
-SCRIPTS_DIRECTORY="$(dirname $0)"
-
 ##}}}#######################################################################
 
 #/ Usage: $SCRIPT [CONFIG_URL]
@@ -155,6 +126,35 @@ while getopts 'fhk' FLAG; do
     *) : ;;
   esac
 done
+
+############################################################################
+# VARS
+############################################################################
+# Output colors.
+C_HIL="\033[36m"
+C_WAR="\033[33m"
+C_SUC="\033[32m"
+C_ERR="\033[31m"
+C_RES="\033[0m"
+
+# SUPRESS ANSIBLE_DEPRECATION
+export ANSIBLE_DEPRECATION_WARNINGS=0
+ANSIBLE_SUDO="-K"
+CONFIG=${1:-config.yml}
+DEVBOOK_BRANCH=${DEVBOOK_BRANCH:=mk2}
+DEVBOOK_EXT_OPTS=""
+DEVBOOK_VERSION=${DEVBOOK_VERSION:=2.0.0}
+DEVBOOK_NOTES="NOTES.md"
+DEVBOOK_LIST_FILE=".devbook.list"
+DEVBOOK_TAG_FILE=".devbook.tags"
+DEVBOOK_SKIP_FILE=".devbook.skip"
+INIT="init.sh"
+KEY_CONFIRM="1"
+KEY_FILE="$HOME/.ssh/id_rsa"
+KEY_FILE_COMMENT="$USER@devbook-$DEVBOOK_VERSION-$CONFIG"
+KEY_FILE_FLAG=0
+REPO="https://github.com/Luciditi/devbook.git"
+SCRIPTS_DIRECTORY="$(dirname $0)"
 
 
 # Retrieve repo if not found
