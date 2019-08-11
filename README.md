@@ -1,4 +1,4 @@
-![Devbook logo](https://0x0.st/spdA.png)
+![Devbook logo](http://www.jig.io/images/devbook.png)
 ---
 <p align="right">
   <a href="https://travis-ci.org/Luciditi/devbook"><img src="https://travis-ci.org/Luciditi/devbook.svg?branch=mk1"></a>
