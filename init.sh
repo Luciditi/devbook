@@ -146,7 +146,6 @@ DEVBOOK_SKIP_FILE=".devbook.skip"
 INIT="init.sh"
 KEY_FILE="$HOME/.ssh/id_rsa"
 KEY_FILE_COMMENT="$USER@devbook-$DEVBOOK_VERSION-$CONFIG"
-KEY_FILE_FLAG=0
 REPO="https://github.com/Luciditi/devbook.git"
 SCRIPTS_DIRECTORY="$(dirname $0)"
 
@@ -158,8 +157,7 @@ if [[ ! -f "$INIT" ]]; then
   git clone "$REPO"
   cd devbook
   git checkout -b "$DEVBOOK_BRANCH" "$DEVBOOK_VERSION"
-  KEY_FLAG=$(echo ${KEY_FILE_FLAG} | sed -e 's/1/-k/g' | sed -e 's/0//g')
-  "./$INIT" $KEY_FLAG "$@"
+  "./$INIT" "$@"
   exit 0
 fi
 
@@ -196,7 +194,7 @@ fi
 
 
 # Create a ssh key
-if [[ "$KEY_FILE_FLAG" == "1" && ! -f "$KEY_FILE" ]]; then
+if [[ ! -f "$KEY_FILE" ]]; then
   echo ""
   echo "${C_HIL}Creating ${C_WAR}$KEY_FILE${C_RES}${C_HIL}...${C_RES}"
   ssh-keygen -f "$KEY_FILE" -t rsa -N '' -C "$KEY_FILE_COMMENT"
