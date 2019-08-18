@@ -107,12 +107,9 @@ echo "${C_SUC}Ansible installed! Execute one of the following commmands: ${C_RES
 echo ""
 
 echo "${C_SUC}1. Full Install                    :   ${C_WAR}$BOOT_CODE${C_RES}"
-echo "${C_SUC}2. Full Install (w/ key install)   :   ${C_WAR}$BOOT_CODE -k ${C_RES}"
-echo "${C_SUC}3. Partial Install                 :   ${C_WAR}$BOOT_CODE jig.io/devbook-config-mini${C_RES}"
-echo "${C_SUC}4. Partial Install (w/ key install):   ${C_WAR}$BOOT_CODE -k jig.io/devbook-config-mini${C_RES}"
+echo "${C_SUC}2. Partial Install                 :   ${C_WAR}$BOOT_CODE jig.io/devbook-config-mini${C_RES}"
 if [[ ! -z "$CONFIG_URL" ]]; then
-  echo "${C_SUC}5. Custom Install                  :   ${C_WAR}$BOOT_CODE $CONFIG_URL${C_RES}"
-  echo "${C_SUC}6. Custom Install (w/ key install) :   ${C_WAR}$BOOT_CODE -k $CONFIG_URL${C_RES}"
+  echo "${C_SUC}3. Custom Install                  :   ${C_WAR}$BOOT_CODE $CONFIG_URL${C_RES}"
 fi
 echo ""
 
@@ -122,17 +119,10 @@ echo ""
 RUN_CODE=""
 case $OPTION in
   1) RUN_CODE="$BOOT_CODE" ;;
-  2) RUN_CODE="$BOOT_CODE -k" ;;
-  3) RUN_CODE="$BOOT_CODE jig.io/devbook-config-mini" ;;
-  4) RUN_CODE="$BOOT_CODE -k jig.io/devbook-config-mini" ;;
-  5)
+  2) RUN_CODE="$BOOT_CODE jig.io/devbook-config-mini" ;;
+  3)
     if [[ ! -z "$CONFIG_URL" ]]; then
       RUN_CODE="$BOOT_CODE $CONFIG_URL"
-    fi
-    ;;
-  6)
-    if [[ ! -z "$CONFIG_URL" ]]; then
-      RUN_CODE="$BOOT_CODE -k $CONFIG_URL"
     fi
     ;;
 esac
