@@ -135,7 +135,7 @@ C_RES="\033[0m"
 export ANSIBLE_DEPRECATION_WARNINGS=0
 CONFIG=${1:-config.yml}
 DEVBOOK_ANSIBLE_SUDO=${DEVBOOK_ANSIBLE_SUDO=-K}
-DEVBOOK_BRANCH=${DEVBOOK_BRANCH=mk3}
+DEVBOOK_BRANCH=${DEVBOOK_BRANCH=}
 DEVBOOK_EXT_OPTS=${DEVBOOK_EXT_OPTS=}
 DEVBOOK_KEY_CONFIRM=${DEVBOOK_KEY_CONFIRM=1}
 DEVBOOK_VERSION=${DEVBOOK_VERSION=}
@@ -158,6 +158,11 @@ if [[ ! -f "$INIT" ]]; then
   cd devbook
 
   # @TODO: Check macOS version for setup
+  #DEVBOOK_VERSION
+  #DEVBOOK_BRANCH
+  # 15 mk3
+  # 13-14 mk2
+  # 12 mk1
   #sw_vers -productVersion | cut -d'.' -f1
   git checkout -b "$DEVBOOK_BRANCH" "$DEVBOOK_VERSION"
   "./$INIT" "$@"
