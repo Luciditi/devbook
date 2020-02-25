@@ -48,4 +48,4 @@ script:
   - curl -o ".devbook.skip"  "$DEVBOOK_SKIP_URL"
 
   # Run the installer
-  - export DEVBOOK_ANSIBLE_SUDO="" && export DEVBOOK_KEY_CONFIRM="0" && sudo ./init.sh "$DEVBOOK_CONFIG_URL"
+  - export DEVBOOK_ANSIBLE_SUDO="" && export DEVBOOK_KEY_CONFIRM="0" && sudo -E ./init.sh "$DEVBOOK_CONFIG_URL"
