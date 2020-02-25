@@ -1,9 +1,0 @@
----
-- name: Find ZSH location
-  shell: which zsh
-  register: zsh_bin
-- name: Set {{ ansible_user_id }} to ZSH
-  user:
-    name: "{{ ansible_user_id }}"
-    shell: "{{ zsh_bin.stdout }}"
-  become: yes
