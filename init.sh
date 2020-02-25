@@ -135,10 +135,10 @@ C_RES="\033[0m"
 export ANSIBLE_DEPRECATION_WARNINGS=0
 CONFIG=${1:-config.yml}
 DEVBOOK_ANSIBLE_SUDO=${DEVBOOK_ANSIBLE_SUDO=-K}
-DEVBOOK_BRANCH=${DEVBOOK_BRANCH=mk2}
+DEVBOOK_BRANCH=${DEVBOOK_BRANCH=mk3}
 DEVBOOK_EXT_OPTS=${DEVBOOK_EXT_OPTS=}
 DEVBOOK_KEY_CONFIRM=${DEVBOOK_KEY_CONFIRM=1}
-DEVBOOK_VERSION=${DEVBOOK_VERSION=2.1.0}
+DEVBOOK_VERSION=${DEVBOOK_VERSION=}
 DEVBOOK_NOTES="NOTES.md"
 DEVBOOK_LIST_FILE=".devbook.list"
 DEVBOOK_TAG_FILE=".devbook.tags"
@@ -156,6 +156,9 @@ if [[ ! -f "$INIT" ]]; then
   echo ""
   git clone "$REPO"
   cd devbook
+
+  # @TODO: Check macOS version for setup
+  #sw_vers -productVersion | cut -d'.' -f1
   git checkout -b "$DEVBOOK_BRANCH" "$DEVBOOK_VERSION"
   "./$INIT" "$@"
   exit 0
