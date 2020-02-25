@@ -67,18 +67,6 @@
       shell: echo 'osx' >> .devbook.tags
       tags: ['osx']
 
-    - include_tasks: tasks/sudoers.yml
-      tags: ['sudoers']
-    - name: Marking Devbook Progress
-      shell: echo 'sudoers' >> .devbook.tags
-      tags: ['sudoers']
-
-    - include_tasks: tasks/zsh.yml
-      tags: ['zsh']
-    - name: Marking Devbook Progress
-      shell: echo 'zsh' >> .devbook.tags
-      tags: ['zsh']
-
     - name: Run configured post-provision ansible task files.
       include_tasks: "{{ outer_item }}"
       loop_control:
