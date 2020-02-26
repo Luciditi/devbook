@@ -138,14 +138,15 @@ DEVBOOK_ANSIBLE_SUDO=${DEVBOOK_ANSIBLE_SUDO=-K}
 DEVBOOK_BRANCH=${DEVBOOK_BRANCH=}
 DEVBOOK_EXT_OPTS=${DEVBOOK_EXT_OPTS=}
 DEVBOOK_KEY_CONFIRM=${DEVBOOK_KEY_CONFIRM=1}
-DEVBOOK_VERSION=${DEVBOOK_VERSION=}
 DEVBOOK_NOTES="NOTES.md"
 DEVBOOK_LIST_FILE=".devbook.list"
 DEVBOOK_TAG_FILE=".devbook.tags"
 DEVBOOK_SKIP_FILE=".devbook.skip"
 INIT="init.sh"
 KEY_FILE="$HOME/.ssh/id_rsa"
-KEY_FILE_COMMENT="$USER@devbook-$DEVBOOK_VERSION-$CONFIG"
+KEY_FILE_COMMENT="$USER@devbook-$DEVBOOK_BRANCH-$CONFIG"
+MACOS_MAJOR_VERSION=$(sw_vers -productVersion | cut -d'.' -f1)
+MACOS_MINOR_VERSION=$(sw_vers -productVersion | cut -d'.' -f2)
 REPO="https://github.com/Luciditi/devbook.git"
 SCRIPTS_DIRECTORY="$(dirname $0)"
 
@@ -157,14 +158,20 @@ if [[ ! -f "$INIT" ]]; then
   git clone "$REPO"
   cd devbook
 
-  # @TODO: Check macOS version for setup
-  #DEVBOOK_VERSION
-  #DEVBOOK_BRANCH
-  # 15 mk3
-  # 13-14 mk2
-  # 12 mk1
-  #sw_vers -productVersion | cut -d'.' -f1
-  git checkout -b "$DEVBOOK_BRANCH" "$DEVBOOK_VERSION"
+  if [[ "$DEVBOOK_BRANCH" == "" ]]; then
+    if [[ $MACOS_MINOR_VERSION -eq 15 ]]; then
+      DEVBOOK_BRANCH="mk3"
+    elif [[ $MACOS_MINOR_VERSION -eq 14 || $MACOS_MINOR_VERSION -eq 14 ]]; then
+      DEVBOOK_BRANCH="mk2"
+    elif [[ $MACOS_MINOR_VERSION -eq 12 ]]; then
+      DEVBOOK_BRANCH="mk1"
+    else
+      echo "Unsupported version of macOS..."
+      exit 0
+    fi
+  fi
+
+  git checkout "$DEVBOOK_BRANCH"
   "./$INIT" "$@"
   exit 0
 fi
