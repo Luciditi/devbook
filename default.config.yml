@@ -114,49 +114,36 @@ homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
   - appcleaner
   - android-studio
-  - cyberduck
+  - au-lab
   - caffeine
   - chrome-devtools
   - docker
-  - dropbox
-  - duet
   - firefox
   - flux
   - google-backup-and-sync
   - google-chrome
   - handbrake
   - iterm2
-  - ishowu-hd
   - istumbler
-  - java8
+  - java
   - keycastr
   - licecap
-  - linein
-  - livereload
-  #- macvim
   - mysql-utilities
   - opera
   - osxfuse
-  - phpstorm
-  - postico
   - qbittorrent
-  #- qemu
+  - rectangle
   - rescuetime
   - sequel-pro
   - skype
-  - spectacle
-  - torbrowser
+  - tor-browser
   - tunnelblick
   - slack
   - vlc
   - xquartz
-  - wine-stable
   - wireshark
-  # NOTE: Security Unlock Req.
-  - karabiner
   - karabiner-elements
   - paragon-vmdk-mounter
-  # NOTE: PW Req.
   - chrome-remote-desktop-host
   - google-earth-pro
   - vagrant
@@ -167,7 +154,6 @@ homebrew_cask_apps:
 mas_installed_apps: []
   #- { id: 497799835, name: "Xcode" }
   #- { id: 803453959, name: "Slack" }
-  #- { id: 926036361, name: "LastPass Password Manager" }
 mas_email: ""
 mas_password: ""
 
@@ -189,7 +175,6 @@ composer_packages:
  - name: drupal/console-launcher
    state: present
    version: "~1.0" 
- - name: drush/drush
  - name: kherge/box
  - name: pdepend/pdepend
  - name: phpunit/dbunit
@@ -211,8 +196,6 @@ go_packages:
 gem_packages:
  - name: bropages
  - name: ghi
- # NOTE: conflict
- #- name: trello_cli
 npm_packages:
  - name: bower
  - name: browserify
@@ -224,8 +207,6 @@ npm_packages:
  - name: regexgen-cli
  - name: standard
  - name: toggl-cli
- # NOTE: conflict
- #- name: trello-cli
  - name: typescript
 pip_packages:
  - name: awscli
@@ -238,8 +219,6 @@ pip_packages:
  - name: percol
  - name: pylint
  - name: pyyaml
- - name: rackspace-auth-openstack
- - name: rackspace-novaclient
  - name: raven
  - name: swiftly
  - name: vobject
