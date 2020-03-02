@@ -40,9 +40,10 @@ prv_files:
 homebrew_installed_packages:
   - antigen
   - autoconf
-  - atlassian-cli
   - bash-completion
+  - bat
   - blackbox
+  - clintmod/formulas/macprefs
   - colordiff
   - composer
   - ctags 
@@ -60,47 +61,45 @@ homebrew_installed_packages:
   - git
   - go
   - gpg
-  - httpie
   - htop
+  - httpie
   - hub
   - iperf
   - irssi
   - jq
   - kops
   - kubectl
-  - libevent
   - lastpass-cli
+  - libevent
   - mackup
-  - clintmod/formulas/macprefs
   - mas
+  - mcrypt
   - moreutils
   - multitail
   - neovim
   - nmap
-  - pick
-  - sqlite
-  - mcrypt
-  - nmap
   - node
   - nvm
   - openssl
+  - pick
   - pv
-  - ssh-copy-id
+  - rbenv
   - readline
   - redis
   - ripgrep
-  - rbenv
   - ruby
   - rust
   - shellcheck
-  - watch
-  - wget
-  - wrk
+  - sqlite
+  - ssh-copy-id
   - terminal-notifier
   - the_silver_searcher
   - tig
   - tree
   - vim
+  - watch
+  - wget
+  - wrk
   - xpdf
   - zsh
 
@@ -112,42 +111,42 @@ homebrew_taps:
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
-  - appcleaner
   - android-studio
+  - appcleaner
   - au-lab
   - caffeine
   - chrome-devtools
+  - chrome-remote-desktop-host
   - docker
   - firefox
   - flux
   - google-backup-and-sync
   - google-chrome
+  - google-earth-pro
   - handbrake
-  - iterm2
   - istumbler
+  - iterm2
   - java
+  - karabiner-elements
   - keycastr
   - licecap
   - mysql-utilities
   - opera
   - osxfuse
+  - paragon-vmdk-mounter
   - qbittorrent
   - rectangle
   - rescuetime
   - sequel-pro
   - skype
+  - slack
   - tor-browser
   - tunnelblick
-  - slack
-  - vlc
-  - xquartz
-  - wireshark
-  - karabiner-elements
-  - paragon-vmdk-mounter
-  - chrome-remote-desktop-host
-  - google-earth-pro
   - vagrant
   - virtualbox
+  - vlc
+  - wireshark
+  - xquartz
 
 # name: geerlingguy.mas
 # NOTE: Will prompt for MAS signin
