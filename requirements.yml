@@ -7,7 +7,7 @@
 
 # Lock Playbook dependencies
 - name: geerlingguy.homebrew
-  version: 2.4.5
+  version: 3.0.0
 #- src: https://github.com/Luciditi/ansible-role-homebrew
 #  name: luciditi.homebrew
 

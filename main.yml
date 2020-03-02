@@ -17,7 +17,7 @@
       tags: ['get-var']
       when: var_name is defined
     - name: Run configured pre-provision ansible task files.
-      include: "{{ outer_item }}"
+      include_tasks: "{{ outer_item }}"
       loop_control:
         loop_var: outer_item
       with_fileglob: "{{ pre_provision_tasks|default(omit) }}"
@@ -43,50 +43,32 @@
 
   # TASKS
   tasks:
-    - include: tasks/ansible-setup.yml
+    - include_tasks: tasks/ansible-setup.yml
       tags: ['ansible-setup']
     - name: Marking Devbook Progress
       shell: echo 'ansible-setup' >> .devbook.tags
       tags: ['ansible-setup']
 
-    - include: tasks/app-open.yml
+    - include_tasks: tasks/app-open.yml
       tags: ['app-open']
     - name: Marking Devbook Progress
       shell: echo 'app-open' >> .devbook.tags
       tags: ['app-open']
 
-    - include: tasks/extra-packages.yml
+    - include_tasks: tasks/extra-packages.yml
       tags: ['extra-packages']
     - name: Marking Devbook Progress
       shell: echo 'extra-packages' >> .devbook.tags
       tags: ['extra-packages']
 
-    - include: tasks/osx.yml
+    - include_tasks: tasks/osx.yml
       tags: ['osx']
     - name: Marking Devbook Progress
       shell: echo 'osx' >> .devbook.tags
       tags: ['osx']
 
-    - include: tasks/sudoers.yml
-      tags: ['sudoers']
-    - name: Marking Devbook Progress
-      shell: echo 'sudoers' >> .devbook.tags
-      tags: ['sudoers']
-
-    - include: tasks/terminal.yml
-      tags: ['terminal']
-    - name: Marking Devbook Progress
-      shell: echo 'terminal' >> .devbook.tags
-      tags: ['terminal']
-
-    - include: tasks/zsh.yml
-      tags: ['zsh']
-    - name: Marking Devbook Progress
-      shell: echo 'zsh' >> .devbook.tags
-      tags: ['zsh']
-
     - name: Run configured post-provision ansible task files.
-      include: "{{ outer_item }}"
+      include_tasks: "{{ outer_item }}"
       loop_control:
         loop_var: outer_item
       with_fileglob: "{{ post_provision_tasks|default(omit) }}"

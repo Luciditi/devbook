@@ -95,33 +95,6 @@ devbook_verbosity() {
   fi
 }
 
-############################################################################
-# VARS
-############################################################################
-# Output colors.
-C_HIL="\033[36m"
-C_WAR="\033[33m"
-C_SUC="\033[32m"
-C_ERR="\033[31m"
-C_RES="\033[0m"
-
-# SUPRESS ANSIBLE_DEPRECATION
-export ANSIBLE_DEPRECATION_WARNINGS=0
-ANSIBLE_SUDO="-K"
-DEVBOOK_BRANCH="mk1"
-DEVBOOK_EXT_OPTS=""
-DEVBOOK_VERSION="1.1.2"
-DEVBOOK_NOTES="NOTES.md"
-DEVBOOK_LIST_FILE=".devbook.list"
-DEVBOOK_TAG_FILE=".devbook.tags"
-DEVBOOK_SKIP_FILE=".devbook.skip"
-INIT="init.sh"
-KEY_CONFIRM="1"
-KEY_FILE="$HOME/.ssh/id_rsa"
-KEY_FILE_FLAG=0
-REPO="https://github.com/Luciditi/devbook.git"
-SCRIPTS_DIRECTORY="$(dirname $0)"
-
 ##}}}#######################################################################
 
 #/ Usage: $SCRIPT [CONFIG_URL]
@@ -140,19 +113,42 @@ expr "$*" : ".*--help" > /dev/null && usage
 
 # Handle options
 # Add options x: - required arg
-while getopts 'fhk' FLAG; do
+while getopts 'hk' FLAG; do
   case "${FLAG}" in
     h) usage; exit 1 ;;
-    f)
-      ANSIBLE_SUDO=""
-      DEVBOOK_EXT_OPTS="-f"
-      KEY_CONFIRM=0
-      shift $((OPTIND -1))
-      ;;
     k) KEY_FILE_FLAG=1; shift $((OPTIND -1)); ;;
     *) : ;;
   esac
 done
+
+############################################################################
+# VARS
+############################################################################
+# Output colors.
+C_HIL="\033[36m"
+C_WAR="\033[33m"
+C_SUC="\033[32m"
+C_ERR="\033[31m"
+C_RES="\033[0m"
+
+# SUPRESS ANSIBLE_DEPRECATION
+export ANSIBLE_DEPRECATION_WARNINGS=0
+CONFIG=${1:-config.yml}
+DEVBOOK_ANSIBLE_SUDO=${DEVBOOK_ANSIBLE_SUDO=-K}
+DEVBOOK_BRANCH=${DEVBOOK_BRANCH=}
+DEVBOOK_EXT_OPTS=${DEVBOOK_EXT_OPTS=}
+DEVBOOK_KEY_CONFIRM=${DEVBOOK_KEY_CONFIRM=1}
+DEVBOOK_NOTES="NOTES.md"
+DEVBOOK_LIST_FILE=".devbook.list"
+DEVBOOK_TAG_FILE=".devbook.tags"
+DEVBOOK_SKIP_FILE=".devbook.skip"
+INIT="init.sh"
+KEY_FILE="$HOME/.ssh/id_rsa"
+KEY_FILE_COMMENT="$USER@devbook-$DEVBOOK_BRANCH-$CONFIG"
+MACOS_MAJOR_VERSION=$(sw_vers -productVersion | cut -d'.' -f1)
+MACOS_MINOR_VERSION=$(sw_vers -productVersion | cut -d'.' -f2)
+REPO="https://github.com/Luciditi/devbook.git"
+SCRIPTS_DIRECTORY="$(dirname $0)"
 
 
 # Retrieve repo if not found
@@ -161,9 +157,22 @@ if [[ ! -f "$INIT" ]]; then
   echo ""
   git clone "$REPO"
   cd devbook
-  git checkout -b "$DEVBOOK_BRANCH" "$DEVBOOK_VERSION"
-  KEY_FLAG=$(echo ${KEY_FILE_FLAG} | sed -e 's/1/-k/g' | sed -e 's/0//g')
-  "./$INIT" $KEY_FLAG "$@"
+
+  if [[ "$DEVBOOK_BRANCH" == "" ]]; then
+    if [[ $MACOS_MINOR_VERSION -eq 15 ]]; then
+      DEVBOOK_BRANCH="mk3"
+    elif [[ $MACOS_MINOR_VERSION -eq 14 || $MACOS_MINOR_VERSION -eq 14 ]]; then
+      DEVBOOK_BRANCH="mk2"
+    elif [[ $MACOS_MINOR_VERSION -eq 12 ]]; then
+      DEVBOOK_BRANCH="mk1"
+    else
+      echo "Unsupported version of macOS..."
+      exit 0
+    fi
+  fi
+
+  git checkout "$DEVBOOK_BRANCH"
+  "./$INIT" "$@"
   exit 0
 fi
 
@@ -192,7 +201,6 @@ VERBOSE_OPT=$(devbook_verbosity)
 
 
 # Use specified config
-CONFIG=${1:-config.yml}
 if [[ "$CONFIG" != "config.yml" ]]; then
   echo ""
   echo "${C_HIL}Using ${C_WAR}$CONFIG${C_RES}${C_HIL} for ${C_WAR}config.yml${C_RES}${C_HIL}...${C_RES}"
@@ -201,10 +209,10 @@ fi
 
 
 # Create a ssh key
-if [[ "$KEY_FILE_FLAG" == "1" && ! -f "$KEY_FILE" ]]; then
+if [[ ! -f "$KEY_FILE" ]]; then
   echo ""
   echo "${C_HIL}Creating ${C_WAR}$KEY_FILE${C_RES}${C_HIL}...${C_RES}"
-  ssh-keygen -f "$KEY_FILE" -t rsa -N ''
+  ssh-keygen -f "$KEY_FILE" -t rsa -b 4096 -N '' -C "$KEY_FILE_COMMENT"
   cat "$KEY_FILE.pub" >> "$HOME/.ssh/authorized_keys"
 fi
 
@@ -217,7 +225,7 @@ ansible-galaxy install $VERBOSE_OPT -r requirements.yml
 
 # Note on private repo access
 REPO=$(ansible_var prv_repo)
-if [[ "$KEY_CONFIRM" == "1" && "$REPO" != "" ]]; then
+if [[ "$DEVBOOK_KEY_CONFIRM" == "1" && "$REPO" != "" ]]; then
   echo ""
   echo "${C_SUC}Ensure ${C_WAR}$KEY_FILE.pub${C_RES}${C_SUC} is an allowed key for ${C_WAR}$REPO${C_SUC} then press ${C_WAR}ENTER${C_SUC}.${C_RES}"
   cat "$KEY_FILE.pub"
@@ -230,7 +238,7 @@ echo ""
 echo "${C_HIL}Installing DevBook...${C_RES}"
 SKIP_TAGS=$(devbook_skip_tags)
 LIST_TAGS=$(devbook_do_tags)
-ansible-playbook main.yml $VERBOSE_OPT -i inventory $ANSIBLE_SUDO --skip-tags "$SKIP_TAGS" $LIST_TAGS
+ansible-playbook main.yml $VERBOSE_OPT -i inventory $DEVBOOK_ANSIBLE_SUDO --skip-tags "$SKIP_TAGS" $LIST_TAGS
 
 # Execute any other .devbook configs found
 if [[ -d "$HOME/.devbook" ]]; then

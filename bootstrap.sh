@@ -52,7 +52,8 @@ C_SUC="\033[32m"
 C_ERR="\033[31m"
 C_RES="\033[0m"
 
-BOOT_CODE="sh <(curl -sL jig.io/devbook-init)"
+ANSIBLE_VERSION="2.9.4"
+BOOT_CODE="sh <(curl -sL jig.io/dev-init)"
 INIT="init.sh"
 if [ -f "$INIT" ]; then
   BOOT_CODE="./$INIT"
@@ -85,20 +86,20 @@ while getopts 'h' FLAG; do
   esac
 done
 
-echo "${C_HIL}Bootstrapping Ansible... ${C_RES}"
+echo "${C_HIL}Bootstrapping Ansible $ANSIBLE_VERSION... ${C_RES}"
 
 # Run Xcode CLI Install
 CLI_TEST=$(bash -c "xcode-select -p 2>/dev/null;echo ''")
 if [ -z "$CLI_TEST" ]; then
   echo "${C_SUC}  - Launching XCode CLI DevTools installer press ${C_WAR}ENTER${C_RES}${C_SUC} when finished... ${C_RES}"
   xcode-select --install
-  read INPUT
+  read -r
 fi
 
 # Run Ansible Install
-echo "${C_SUC}  - Installing pip & Ansible. Please enter ${C_WAR}$USER${C_RES}${C_SUC}'s password to install... ${C_RES}"
+echo "${C_SUC}  - Installing pip & Ansible $ANSIBLE_VERSION. Please enter ${C_WAR}$USER${C_RES}${C_SUC}'s password to install... ${C_RES}"
 sudo easy_install pip
-bash -c "sudo $PIP_BIN install ansible==2.4.4.0"
+bash -c "sudo $PIP_BIN install ansible==$ANSIBLE_VERSION"
 
 
 # Instructions
@@ -106,12 +107,9 @@ echo "${C_SUC}Ansible installed! Execute one of the following commmands: ${C_RES
 echo ""
 
 echo "${C_SUC}1. Full Install                    :   ${C_WAR}$BOOT_CODE${C_RES}"
-echo "${C_SUC}2. Full Install (w/ key install)   :   ${C_WAR}$BOOT_CODE -k ${C_RES}"
-echo "${C_SUC}3. Partial Install                 :   ${C_WAR}$BOOT_CODE jig.io/devbook-config-mini${C_RES}"
-echo "${C_SUC}4. Partial Install (w/ key install):   ${C_WAR}$BOOT_CODE -k jig.io/devbook-config-mini${C_RES}"
+echo "${C_SUC}2. Partial Install                 :   ${C_WAR}$BOOT_CODE jig.io/devbook-config-mini${C_RES}"
 if [[ ! -z "$CONFIG_URL" ]]; then
-  echo "${C_SUC}5. Custom Install                  :   ${C_WAR}$BOOT_CODE $CONFIG_URL${C_RES}"
-  echo "${C_SUC}6. Custom Install (w/ key install) :   ${C_WAR}$BOOT_CODE -k $CONFIG_URL${C_RES}"
+  echo "${C_SUC}3. Custom Install                  :   ${C_WAR}$BOOT_CODE $CONFIG_URL${C_RES}"
 fi
 echo ""
 
@@ -121,17 +119,10 @@ echo ""
 RUN_CODE=""
 case $OPTION in
   1) RUN_CODE="$BOOT_CODE" ;;
-  2) RUN_CODE="$BOOT_CODE -k" ;;
-  3) RUN_CODE="$BOOT_CODE jig.io/devbook-config-mini" ;;
-  4) RUN_CODE="$BOOT_CODE -k jig.io/devbook-config-mini" ;;
-  5)
+  2) RUN_CODE="$BOOT_CODE jig.io/devbook-config-mini" ;;
+  3)
     if [[ ! -z "$CONFIG_URL" ]]; then
       RUN_CODE="$BOOT_CODE $CONFIG_URL"
-    fi
-    ;;
-  6)
-    if [[ ! -z "$CONFIG_URL" ]]; then
-      RUN_CODE="$BOOT_CODE -k $CONFIG_URL"
     fi
     ;;
 esac

@@ -30,8 +30,6 @@
     state: "{{ item.state | default('present') }}"
     version: "{{ item.version | default(omit) }}"
     executable: "{{ item.executable | default(omit) }}"
-    # ignore for macOS SIP: https://github.com/pypa/pip/issues/3165#issuecomment-145856429
-    extra_args: --ignore-installed six
   with_items: "{{ pip_packages }}"
   become: true
 
@@ -43,3 +41,4 @@
     user_install: no
     executable: "{{ item.executable | default(omit) }}"
   with_items: "{{ gem_packages }}"
+  become: true
