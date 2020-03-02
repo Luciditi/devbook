@@ -212,7 +212,7 @@ fi
 if [[ ! -f "$KEY_FILE" ]]; then
   echo ""
   echo "${C_HIL}Creating ${C_WAR}$KEY_FILE${C_RES}${C_HIL}...${C_RES}"
-  ssh-keygen -f "$KEY_FILE" -t rsa -N '' -C "$KEY_FILE_COMMENT"
+  ssh-keygen -f "$KEY_FILE" -t rsa -b 4096 -N '' -C "$KEY_FILE_COMMENT"
   cat "$KEY_FILE.pub" >> "$HOME/.ssh/authorized_keys"
 fi
 
