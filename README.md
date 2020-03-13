@@ -10,7 +10,7 @@ A developer workstation provisioner for macOS powered by Ansible.
 - **Dependencies:** `sh <(curl -sL jig.io/devbook-boot)` for XCode CLI tools & Ansible 
 - **Installer:**
   - **Full (~1 hour):** `sh <(curl -sL jig.io/devbook-init)`
-  - **Partial (~0.5 hour):** `sh <(curl -sL jig.io/devook-init) jig.io/devbook-config-mini`
+  - **Partial (~0.5 hour):** `sh <(curl -sL jig.io/devbook-init) jig.io/devbook-config-mini`
   - <sub>(or clone the repo & run `./bootstrap.sh` & `./init.sh` if you don't trush me)</sub>
 
 ## Toolchain
